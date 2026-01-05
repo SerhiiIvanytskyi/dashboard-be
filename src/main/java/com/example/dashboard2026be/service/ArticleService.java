@@ -1,13 +1,12 @@
 package com.example.dashboard2026be.service;
 
 import com.example.dashboard2026be.dto.CreateArticleRequest;
-import com.example.dashboard2026be.model.ArticlePost;
+import com.example.dashboard2026be.model.Article;
 import com.example.dashboard2026be.repo.ArticleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 
 @Service
 public class ArticleService {
@@ -15,13 +14,13 @@ public class ArticleService {
     public ArticleRepo repo;
 
     //method to return all articles
-    public List<ArticlePost> getAllArticles() {
+    public List<Article> getAllArticles() {
         return repo.findAll();
     }
 
     // method to add a new article
-    public ArticlePost addArticle(CreateArticleRequest req) {
-        ArticlePost article = new ArticlePost(
+    public Article addArticle(CreateArticleRequest req) {
+        Article article = new Article(
             null,
             req.title(),
             req.category(),
@@ -35,34 +34,19 @@ public class ArticleService {
         return repo.save(article);
     }
 
-    //method to get job by id
-    public ArticlePost getArticle(int postId) {
-        return repo.findById(postId).orElse(new ArticlePost());
+    //method to get article by id
+    public Article getArticle(int articleId) {
+        return repo.findById(articleId).orElse(new Article());
     }
 
-    //method to update job with job post object
-    public void updateJob(ArticlePost jobPost) {
-        repo.save(jobPost);
+    //method to update article
+    public void updateArticle(Article article) {
+        repo.save(article);
     }
 
-    //method to delete job post by id
-    public void deleteJob(int postId) {
-        repo.deleteById(postId);
+    //method to delete article by id
+    public void deleteArticle(int articleId) {
+        repo.deleteById(articleId);
     }
 
-//    public void load() {
-//        // arrayList to store store JobPost objects
-//        List<ArticlePost> jobs =
-//                new ArrayList<>(List.of(
-//                        new ArticlePost(1, "Software Engineer", "Exciting opportunity for a skilled software engineer.", 3, List.of("Java", "Spring", "SQL")),
-//                        new ArticlePost(2, "Data Scientist", "Join our data science team and work on cutting-edge projects.", 5, List.of("Python", "Machine Learning", "TensorFlow")),
-//                        new ArticlePost(3, "Frontend Developer", "Create amazing user interfaces with our talented frontend team.", 2, List.of("JavaScript", "React", "CSS")),
-//                        new ArticlePost(4, "Network Engineer", "Design and maintain our robust network infrastructure.", 4, List.of("Cisco", "Routing", "Firewalls")),
-//                        new ArticlePost(5, "UX Designer", "Shape the user experience with your creative design skills.", 3, List.of("UI/UX Design", "Adobe XD", "Prototyping"))
-//
-//                ));
-//
-//        repo.saveAll(jobs);
-//
-//    }
 }

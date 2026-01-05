@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class ArticlePost {
+public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
