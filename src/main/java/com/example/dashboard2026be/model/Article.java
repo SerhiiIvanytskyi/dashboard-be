@@ -1,9 +1,6 @@
 package com.example.dashboard2026be.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +19,12 @@ public class Article {
     private String category;
     private String text;
     private String date;
-    private String imageUrl;
     private String userId;
     private String userName;
     private String userAvatar;
+    private String imageName;
+    private String imageType;
+    @Lob
+    private byte[] imageData;
 
 }

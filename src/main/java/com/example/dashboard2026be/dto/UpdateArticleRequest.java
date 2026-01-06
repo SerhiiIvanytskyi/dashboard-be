@@ -1,6 +1,7 @@
 package com.example.dashboard2026be.dto;
 
-public record CreateArticleRequest(
+public record UpdateArticleRequest(
+    Long id,
     String title,
     String category,
     String text,
