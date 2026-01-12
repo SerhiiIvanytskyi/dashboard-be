@@ -1,4 +1,4 @@
-package com.example.dashboard2026be.dto;
+package com.example.dashboard2026be.dto.article;
 
 public record ArticleResponse(
     Long id,
@@ -9,5 +9,4 @@ public record ArticleResponse(
     String userId,
     String userName,
     String userAvatar,
-    boolean hasImage
-) {}
+    boolean hasImage) {}

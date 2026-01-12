@@ -1,4 +1,4 @@
-package com.example.dashboard2026be.dto;
+package com.example.dashboard2026be.dto.article;
 
 public record CreateArticleRequest(
     String title,
@@ -7,5 +7,4 @@ public record CreateArticleRequest(
     String date,
     String userId,
     String userName,
-    String userAvatar
-) {}
+    String userAvatar) {}

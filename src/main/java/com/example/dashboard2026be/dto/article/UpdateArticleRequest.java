@@ -1,4 +1,4 @@
-package com.example.dashboard2026be.dto;
+package com.example.dashboard2026be.dto.article;
 
 public record UpdateArticleRequest(
     Long id,
@@ -8,5 +8,4 @@ public record UpdateArticleRequest(
     String date,
     String userId,
     String userName,
-    String userAvatar
-) {}
+    String userAvatar) {}
