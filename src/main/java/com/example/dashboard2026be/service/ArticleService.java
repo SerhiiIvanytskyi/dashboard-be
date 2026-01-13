@@ -5,8 +5,10 @@ import com.example.dashboard2026be.dto.article.CreateArticleRequest;
 import com.example.dashboard2026be.dto.article.UpdateArticleRequest;
 import com.example.dashboard2026be.model.Article;
 import com.example.dashboard2026be.repository.ArticleRepository;
+import jakarta.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,7 +53,12 @@ public class ArticleService {
   }
 
   public Article getArticle(int articleId) {
-    return repo.findById(articleId).orElse(new Article());
+    return repo.findById(articleId)
+        .orElseThrow(() -> new EntityNotFoundException("Article not found"));
+  }
+
+  public Optional<byte[]> getArticleImage(int articleId) {
+    return repo.findById(articleId).map(Article::getImageData);
   }
 
   public Article updateArticle(UpdateArticleRequest req, MultipartFile image) throws IOException {

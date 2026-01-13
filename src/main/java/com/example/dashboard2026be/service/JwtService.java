@@ -18,6 +18,7 @@ public class JwtService {
         .claim("role", user.getRole())
         .claim("name", user.getName())
         .claim("id", user.getId())
+        .claim("age", user.getAge())
         .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 день
         .signWith(key)

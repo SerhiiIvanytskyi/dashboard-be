@@ -25,6 +25,12 @@ public class AuthService {
     User user = new User();
     user.setEmail(request.email());
     user.setPassword(passwordEncoder.encode(request.password()));
+    if (request.name() != null) {
+      user.setName(request.name());
+    }
+    if (request.age() != null) {
+      user.setAge(request.age());
+    }
 
     userRepository.save(user);
   }

@@ -3,11 +3,13 @@ package com.example.dashboard2026be.controller;
 import com.example.dashboard2026be.dto.article.ArticleResponse;
 import com.example.dashboard2026be.dto.article.CreateArticleRequest;
 import com.example.dashboard2026be.dto.article.UpdateArticleRequest;
+import com.example.dashboard2026be.mapper.ArticleMapper;
 import com.example.dashboard2026be.model.Article;
 import com.example.dashboard2026be.service.ArticleService;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +29,11 @@ public class ArticleController {
   }
 
   @GetMapping("/article/{articleId}")
-  public ResponseEntity<Article> getArticle(@PathVariable int articleId) {
+  public ResponseEntity<ArticleResponse> getArticle(@PathVariable int articleId) {
     Article article = service.getArticle(articleId);
-    if (article.getId() > 0) {
-      return new ResponseEntity<>(service.getArticle(articleId), HttpStatus.OK);
-    } else {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+    ArticleResponse response = ArticleMapper.toResponse(article);
+
+    return ResponseEntity.ok(response);
   }
 
   @PostMapping("article")
@@ -67,13 +67,15 @@ public class ArticleController {
     return ResponseEntity.noContent().build();
   }
 
-  @GetMapping("article/{articleId}/image")
+  @GetMapping("/article/{articleId}/image")
   public ResponseEntity<byte[]> getArticleImage(@PathVariable int articleId) {
-    Article article = service.getArticle(articleId);
-    if (article.getId() > 0) {
-      return new ResponseEntity<>(article.getImageData(), HttpStatus.OK);
-    } else {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+    return service
+        .getArticleImage(articleId)
+        .map(
+            image ->
+                ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_JPEG_VALUE)
+                    .body(image))
+        .orElse(ResponseEntity.notFound().build());
   }
 }
