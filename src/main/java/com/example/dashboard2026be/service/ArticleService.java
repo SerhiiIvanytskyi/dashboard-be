@@ -15,74 +15,71 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ArticleService {
-  @Autowired public ArticleRepository repo;
+    @Autowired
+    public ArticleRepository repo;
 
-  public List<ArticleResponse> getArticles() {
-    return repo.findAll().stream()
-        .map(
-            a ->
-                new ArticleResponse(
-                    a.getId(),
-                    a.getTitle(),
-                    a.getCategory(),
-                    a.getText(),
-                    a.getDate(),
-                    a.getUserId(),
-                    a.getUserName(),
-                    a.getUserAvatar(),
-                    a.getImageData() != null))
-        .toList();
-  }
-
-  public Article addArticle(CreateArticleRequest req, MultipartFile image) throws IOException {
-    Article article = new Article();
-    article.setTitle(req.title());
-    article.setCategory(req.category());
-    article.setText(req.text());
-    article.setDate(req.date());
-    article.setUserId(req.userId());
-    article.setUserName(req.userName());
-    article.setUserAvatar(req.userAvatar());
-
-    if (image != null && !image.isEmpty()) {
-      article.setImageName(image.getOriginalFilename());
-      article.setImageType(image.getContentType());
-      article.setImageData(image.getBytes());
+    public List<ArticleResponse> getArticles() {
+        return repo.findAll().stream()
+                .map(a -> new ArticleResponse(
+                        a.getId(),
+                        a.getTitle(),
+                        a.getCategory(),
+                        a.getText(),
+                        a.getDate(),
+                        a.getUserId(),
+                        a.getUserName(),
+                        a.getUserAvatar(),
+                        a.getImageData() != null))
+                .toList();
     }
-    return repo.save(article);
-  }
 
-  public Article getArticle(int articleId) {
-    return repo.findById(articleId)
-        .orElseThrow(() -> new EntityNotFoundException("Article not found"));
-  }
+    public Article addArticle(CreateArticleRequest req, MultipartFile image) throws IOException {
+        Article article = new Article();
+        article.setTitle(req.title());
+        article.setCategory(req.category());
+        article.setText(req.text());
+        article.setDate(req.date());
+        article.setUserId(req.userId());
+        article.setUserName(req.userName());
+        article.setUserAvatar(req.userAvatar());
 
-  public Optional<byte[]> getArticleImage(int articleId) {
-    return repo.findById(articleId).map(Article::getImageData);
-  }
-
-  public Article updateArticle(UpdateArticleRequest req, MultipartFile image) throws IOException {
-    Article article =
-        repo.findById(Math.toIntExact(req.id()))
-            .orElseThrow(() -> new RuntimeException("Article not found"));
-
-    article.setTitle(req.title());
-    article.setCategory(req.category());
-    article.setText(req.text());
-    article.setDate(req.date());
-    article.setUserId(req.userId());
-    article.setUserName(req.userName());
-    article.setUserAvatar(req.userAvatar());
-
-    if (image != null && !image.isEmpty()) {
-      article.setImageName(image.getOriginalFilename());
-      article.setImageType(image.getContentType());
-      article.setImageData(image.getBytes());
+        if (image != null && !image.isEmpty()) {
+            article.setImageName(image.getOriginalFilename());
+            article.setImageType(image.getContentType());
+            article.setImageData(image.getBytes());
+        }
+        return repo.save(article);
     }
-    return repo.save(article);
+
+    public Article getArticle(int articleId) {
+        return repo.findById(articleId).orElseThrow(() -> new EntityNotFoundException("Article not found"));
+    }
+
+  public Optional<Article> getArticleImage(int articleId) {
+    return repo.findById(articleId);
   }
 
-  public void deleteArticle(int articleId) {
-    repo.deleteById(articleId);
-  }
+    public Article updateArticle(UpdateArticleRequest req, MultipartFile image) throws IOException {
+        Article article =
+                repo.findById(Math.toIntExact(req.id())).orElseThrow(() -> new RuntimeException("Article not found"));
+
+        article.setTitle(req.title());
+        article.setCategory(req.category());
+        article.setText(req.text());
+        article.setDate(req.date());
+        article.setUserId(req.userId());
+        article.setUserName(req.userName());
+        article.setUserAvatar(req.userAvatar());
+
+        if (image != null && !image.isEmpty()) {
+            article.setImageName(image.getOriginalFilename());
+            article.setImageType(image.getContentType());
+            article.setImageData(image.getBytes());
+        }
+        return repo.save(article);
+    }
+
+    public void deleteArticle(int articleId) {
+        repo.deleteById(articleId);
+    }
 }

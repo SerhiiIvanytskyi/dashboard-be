@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Dashboard2026BeApplication {
 
-  static void main(String[] args) {
-    SpringApplication.run(Dashboard2026BeApplication.class, args);
-  }
+    static void main(String[] args) {
+        SpringApplication.run(Dashboard2026BeApplication.class, args);
+    }
 }

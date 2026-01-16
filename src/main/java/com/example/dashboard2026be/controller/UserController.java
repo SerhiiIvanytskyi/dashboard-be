@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
-  private final UserService userService;
+    private final UserService userService;
 
-  @PutMapping(value = "/user")
-  public ResponseEntity<User> updateProfile(
-      @RequestBody UpdateUserRequest request, Authentication authentication) {
+    @PutMapping(value = "/user")
+    public ResponseEntity<User> updateProfile(@RequestBody UpdateUserRequest request, Authentication authentication) {
 
-    userService.updateCurrentUser(request, authentication);
-    return ResponseEntity.ok().build();
-  }
+        userService.updateCurrentUser(request, authentication);
+        return ResponseEntity.ok().build();
+    }
 }
